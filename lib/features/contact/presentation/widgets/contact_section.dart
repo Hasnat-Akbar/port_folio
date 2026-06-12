@@ -183,7 +183,7 @@ class _ContactSectionState extends State<ContactSection> {
       );
       return;
     }
-
+    _showLoading();
     final serviceId = 'service_ul336nl';
     final templateId = 'template_tdv2dzb';
     final userId = '61kE2KnAsIOOa150b';
@@ -208,7 +208,7 @@ class _ContactSectionState extends State<ContactSection> {
           },
         }),
       );
-
+      Navigator.of(context).pop();
       if (response.statusCode == 200) {
         nameController.clear();
         emailController.clear();
@@ -226,5 +226,35 @@ class _ContactSectionState extends State<ContactSection> {
         context,
       ).showSnackBar(SnackBar(content: Text('Error: $e')));
     }
+  }
+
+  void showStatusDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('ok'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showLoading() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return Center(
+          child: CircularProgressIndicator(color: Colors.blueAccent),
+        );
+      },
+    );
   }
 }

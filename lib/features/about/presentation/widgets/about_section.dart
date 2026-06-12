@@ -59,23 +59,56 @@ class AboutSection extends StatelessWidget {
                 ),
                 if (isDesktop) ...[
                   const SizedBox(width: 40),
+                  // Container(
+                  //   width: 300,
+                  //   height: 300,
+                  //   decoration: BoxDecoration(
+                  //     color: Theme.of(
+                  //       context,
+                  //     ).colorScheme.primary.withOpacity(0.1),
+                  //     borderRadius: BorderRadius.circular(20),
+                  //     border: Border.all(
+                  //       color: Theme.of(context).colorScheme.primary,
+                  //       width: 1.5,
+                  //     ),
+                  //     boxShadow: [
+                  //       BoxShadow(
+                  //         color: Colors.black.withOpacity(0.1),
+                  //         blurRadius: 15,
+                  //         offset: Offset(0, 8),
+                  //       ),
+                  //     ],
+                  //   ),
+                  //   child: ClipRRect(
+                  //     borderRadius: BorderRadius.circular(20),
+                  //     child: Image.asset('assets/images/main.jpeg'),
+                  //   ),
+                  // ),
+                  const SizedBox(width: 40),
+
                   Container(
-                    width: 200,
-                    height: 200,
+                    width: 300,
+                    height: 300,
                     decoration: BoxDecoration(
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.primary.withOpacity(0.1),
+                      color: Colors.black,
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
                         color: Theme.of(context).colorScheme.primary,
+                        width: 1.5,
                       ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 15,
+                          offset: Offset(0, 8),
+                        ),
+                      ],
                     ),
-                    child: Center(
-                      child: Icon(
-                        Icons.person_rounded,
-                        size: 80,
-                        color: Theme.of(context).colorScheme.primary,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.asset(
+                        'assets/images/main.jpeg',
+                        fit: BoxFit.contain,
                       ),
                     ),
                   ),

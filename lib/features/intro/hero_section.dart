@@ -4,17 +4,45 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:m_portfolio/shared/widgets/custom_button.dart';
 import 'package:m_portfolio/shared/widgets/responsive_layout.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class HeroSection extends StatelessWidget {
+class HeroSection extends StatefulWidget {
   final VoidCallback onViewWork;
+
   const HeroSection({super.key, required this.onViewWork});
 
+  @override
+  State<HeroSection> createState() => _HeroSectionState();
+}
+
+class _HeroSectionState extends State<HeroSection> {
   @override
   Widget build(BuildContext context) {
     return ResponsiveLayout(
       mobileBody: _buildMobileLayout(context),
       desktopBody: _buildDesktopLayout(context),
     );
+  }
+
+  bool isLoading = false;
+
+  Future<void> openResume() async {
+    setState(() {
+      isLoading = true;
+    });
+    final Uri url = Uri.parse(
+      'https://github.com/Hasnat-Akbar/port_folio/raw/main/Hasnat_Akbar_Resume.pdf',
+    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text("Opening resume...")));
+
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      throw Exception("Could not launch resume");
+    }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   Widget _buildDesktopLayout(BuildContext context) {
@@ -66,15 +94,15 @@ class HeroSection extends StatelessWidget {
                 Row(
                   children: [
                     CustomButton(
-                      label: "Download Resume",
-                      icon: FontAwesomeIcons.download,
-                      onPressed: () {}, // TODO: Add resume link
+                      label: isLoading ? 'opening' : "Download Resume",
+                      icon: isLoading ? null : FontAwesomeIcons.download,
+                      onPressed: isLoading ? null : openResume,
                     ),
                     const SizedBox(width: 20),
                     CustomButton(
                       label: "View Work",
                       isOutlined: true,
-                      onPressed: onViewWork,
+                      onPressed: widget.onViewWork,
                     ),
                   ],
                 ).animate(delay: 1200.ms).fadeIn().slideY(begin: 0.2, end: 0),
@@ -155,15 +183,15 @@ class HeroSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               CustomButton(
-                label: "Download Resume",
-                icon: FontAwesomeIcons.download,
-                onPressed: () {},
+                label: isLoading ? 'opening' : "Download Resume",
+                icon: isLoading ? null : FontAwesomeIcons.download,
+                onPressed: isLoading ? null : openResume,
               ),
               const SizedBox(height: 16),
               CustomButton(
                 label: "View Work",
                 isOutlined: true,
-                onPressed: onViewWork,
+                onPressed: widget.onViewWork,
               ),
             ],
           ).animate(delay: 1200.ms).fadeIn().slideY(begin: 0.2, end: 0),
